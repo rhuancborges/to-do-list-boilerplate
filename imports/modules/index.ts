@@ -4,15 +4,14 @@ import Aniversario from './aniversario/config';
 import UserProfile from './userprofile/config';
 
 const pages: Array<IRoute | null> = [
-	...Example.pagesRouterList, 
-	...Aniversario.pagesRouterList, 
-	...UserProfile.pagesRouterList
+	...UserProfile.pagesRouterList,
+	...Example.pagesRouterList,
 ];
 
 const menuItens: Array<IAppMenu | null> = [
-	...Example.pagesMenuItemList, 
-	...Aniversario.pagesMenuItemList,
-	...UserProfile.pagesMenuItemList
+	...Example.pagesMenuItemList,
+	...UserProfile.pagesMenuItemList,
+	
 ];
 
 const Modules: IModuleHub = {

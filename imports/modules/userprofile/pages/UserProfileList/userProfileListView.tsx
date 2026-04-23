@@ -23,7 +23,7 @@ const UserProfileLisView = () => {
 		},
 		{
 			value: 'Administrador',
-			label: 'Admnistrador'
+			label: 'Administrador'
 		},
 		{
 			value: 'Usuario',

@@ -18,7 +18,9 @@ const SysAppBarView: React.FC<ISysAppBar> = ({logo}) => {
   return (
     <Styles.wrapper>
       <Styles.container>
-        {logo}
+        <Styles.wrapper onClick={controller.onClickLogo} sx={{"&:hover": {cursor: "pointer"}}}>
+          {logo}
+        </Styles.wrapper>
         <Styles.navContainerDesktop>
           {controller.menuOptions.map(option => (
             <RenderWithPermission key={option?.name} resources={option?.resources}>

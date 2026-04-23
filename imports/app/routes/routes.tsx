@@ -1,5 +1,4 @@
 import Modules from '../../modules';
-import Pages from '../../sysPages/config';
 import { IAppMenu, IRoute } from '../../modules/modulesTypings';
 import { useLocation } from 'react-router-dom';
 
@@ -19,8 +18,8 @@ class SysRoutes {
 	};
 
 	constructor() {
-		this.routes = [...Modules.pagesRouterList, ...Pages.pagesRouterList ];
-		this.menuItens = [...Pages.pagesMenuItemList, ...Modules.pagesMenuItemList];
+		this.routes = [...Modules.pagesRouterList];
+		this.menuItens = [...Modules.pagesMenuItemList];
 	}
 
 	public checkIfRouteExists = (path: string) =>
