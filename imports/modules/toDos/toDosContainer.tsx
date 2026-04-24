@@ -1,6 +1,8 @@
 import React from "react";
 import { IDefaultContainerProps } from '../../typings/BoilerplateDefaultTypings';
 import { useParams } from 'react-router-dom';
+import ToDosListController from "./pages/toDosList/toDosListController";
+import ToDosDetailController from "./pages/toDosDetail/toDosDetailController";
 
 
 export interface IToDoModuleContext {
@@ -18,8 +20,8 @@ export default (props: IDefaultContainerProps) => {
     const validState = ["view", "create", "edit"]; // Estados de popup
 
     const renderPage = () => {
-        if (!!!state || !validState.includes(state)) return <></>; //Mostro da lista geral 
-        return <></>; //Mostro o detalhe
+        if (!!!state || !validState.includes(state)) return <ToDosListController/>; //Mostro da lista geral 
+        return <ToDosDetailController/>; //Mostro o detalhe
     }
 
     const providerValue = {
