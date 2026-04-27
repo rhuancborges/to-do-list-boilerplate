@@ -7,12 +7,10 @@ export interface IToDos extends IDoc {
     status: string,
     ownerId: string,
     ownerName: string,
-    isPrivate: boolean,
-    createdAt: Date,
-    updatedAt: Date,
+    isPrivate: boolean
 }
 
-enum TASK_STATUS {
+export enum TASK_STATUS {
     CONCLUIDA = "Concluída",
     NÃO_CONCLUIDA = "Não Concluída"
 }
@@ -56,14 +54,5 @@ export const toDosSchema: ISchema<IToDos> = {
         label: "Tarefa pessoal",
         defaultValue: false,
         optional: false
-    },
-    createdAt: {
-        type: Date,
-        label: "Data de criação da tarefa",
-    },
-    updatedAt: {
-        type: Date,
-        label: "Data de atualização da tarefa"
     }
-
 }
