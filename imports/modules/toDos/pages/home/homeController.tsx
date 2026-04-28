@@ -9,6 +9,7 @@ import { useTracker } from "meteor/react-meteor-data";
 
 export interface IHomeControllerContext {
     tasks: Array<IToDos>
+    lastTasks: Array<IToDos>
     criar: () => void;
 }
 
@@ -26,6 +27,15 @@ const HomeController = () => {
         }
     }, []);
 
+     const {isLoading, lastTasks} = useTracker(() => {
+        const handle = toDosApi.subscribe("toDosLasts");
+        const tasks = toDosApi.find({}).fetch();
+        console.log(tasks);
+        return {
+            lastTasks: tasks, isLoading: !handle?.ready()
+        }
+    }, []);
+
     const criar = () => {
         toDosApi.insertTask({
             title: "Tarefa teste",
@@ -34,9 +44,10 @@ const HomeController = () => {
         });
     }
     if (loading) return <SysLoading/>
+    if (isLoading) return <SysLoading/>
 
     return (
-        <HomeControllerContext.Provider value={{tasks, criar}}>
+        <HomeControllerContext.Provider value={{tasks, criar, lastTasks}}>
             <HomeView/>
         </HomeControllerContext.Provider>
     );
