@@ -31,7 +31,7 @@ const HomeController = () => {
             title: "Tarefa teste",
             description: "Essa é uma tarefa de teste",
             isPrivate: false
-        })
+        });
     }
     if (loading) return <SysLoading/>
 
