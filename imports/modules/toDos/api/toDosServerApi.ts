@@ -29,6 +29,16 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
                 }
             })
         })
+
+        this.addPublication("toDosLasts", (filter = {sort: {createdAt: -1}, limit: 5})=>{
+            return this.defaultListCollectionPublication(filter, {
+                projection: {
+                    title: 1,
+                    description: 1,
+                    ownerName: 1,
+                    status: 1,
+                }})
+        })
     }
 }
 
