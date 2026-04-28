@@ -34,6 +34,15 @@ class ToDosApi extends ProductBase<IToDos> {
     toggleStatus(_id: string, status: TASK_STATUS){
         this.callMethod("update", _id, {$set: {status: status}});        
     }
+
+    removeTask(_id: string){
+        const user = Meteor.user();
+        const task = this.getCollectionInstance().findOne(_id);
+        if(task.ownerId !== user?._id){
+            throw new Meteor.Error("remove-error", "Somente o usuário criador pode remover uma tarefa");
+        }
+        this.callMethod("remove", _id);
+    }
 }
 
 export const toDosApi = new ToDosApi();
