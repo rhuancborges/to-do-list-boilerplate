@@ -6,11 +6,11 @@ import ToDosDetailController from "./pages/toDosDetail/toDosDetailController";
 
 
 export interface IToDoModuleContext {
-    state?: string,
-    id?: string
+    state: string,
+    id: string
 };
 
-export const ToDoModuleContext = React.createContext<IToDoModuleContext>({});
+export const ToDoModuleContext = React.createContext<IToDoModuleContext>({} as IToDoModuleContext);
 
 export default (props: IDefaultContainerProps) => {
     let {screenState, exampleId} = useParams();

@@ -1,15 +1,24 @@
-import React from "react";
-import { Chip, Container, Typography } from "@mui/material";
+import React, { useContext } from "react";
+import { Chip, Container, Typography, List} from "@mui/material";
 import { ComplexTable } from "/imports/ui/components/ComplexTable/ComplexTable";
 import { exampleSch } from "/imports/modules/example/api/exampleSch";
+import { ToDosListControllerContext } from "./toDosListController";
+import { TaskWidget } from "../../components/taskWidget";
+import { SysAccordion } from "/imports/ui/components/sysAccordion/sysAccordion";
 
 
 const ToDosListView = () => {
+    const controller = useContext(ToDosListControllerContext);
 
-    const list = [1,2,3,4,5,6,7,8,9,10]
+   
     return (
         <Container>
-            <Typography>Helores</Typography>
+        
+           <List>
+                {controller.tasks.map((task) => {
+                    return <TaskWidget task={task}/>
+                })}
+           </List>
         </Container>
     );
 };
