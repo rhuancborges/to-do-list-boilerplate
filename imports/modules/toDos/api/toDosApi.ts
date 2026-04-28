@@ -22,12 +22,17 @@ class ToDosApi extends ProductBase<IToDos> {
         this.callMethod("insert", task);
     }
 
-    updateTask(doc: IToDos){
+    editTask(_id: string, doc: IToDos){
         const user =  Meteor.user();
-        if(doc.ownerId !== user?._id){
-            throw new Meteor.Error("update-error", "Somente o usuário criador pode editar a tarefa");
+        const task = this.getCollectionInstance().findOne(_id);
+        if(task.ownerId !== user?._id){
+            throw new Meteor.Error("edit-error", "Somente o usuário criador pode editar a tarefa");
         }
-        this.callMethod("update", doc);
+        this.callMethod("update", _id, {$set: {...doc}});
+    }
+
+    toggleStatus(_id: string, status: TASK_STATUS){
+        this.callMethod("update", _id, {$set: {status: status}});        
     }
 }
 
