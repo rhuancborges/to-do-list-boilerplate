@@ -13,7 +13,6 @@ type MapRolesRecursos = Record<RoleType, Array<string>>;
 const _mapRolesRecursos: MapRolesRecursos = {
 	[RoleType.PUBLICO]: [],
 	[RoleType.USUARIO]: [
-		..._getAllValues(Exemplo),
 		..._getAllValues(ToDos),
 		..._getAllValues(HomeResources),
 		Usuarios.USUARIO_UPDATE,

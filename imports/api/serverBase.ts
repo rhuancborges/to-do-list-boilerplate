@@ -1326,7 +1326,6 @@ export class ServerApiBase<Doc extends IDoc> {
 		try {
 			check(_docObj._id, String);
 			const id = _docObj._id;
-			console.log(`CONTEXTO NO SERVER UPDATE: ${_context.user}`)
 			if (await this.beforeUpdate(_docObj, _context)) {
 				_docObj = this._checkDataBySchema(_docObj as Doc, this.auditFields);
 				await this._includeAuditData(_docObj, 'update');
@@ -1365,7 +1364,6 @@ export class ServerApiBase<Doc extends IDoc> {
 	 * @returns {Boolean} - Returns true for any action.
 	 */
 	async beforeUpdate(_docObj: Doc | Partial<Doc>, _context: IContext) {
-		console.log(`_context: ${_context.user}`)
 		if (this.defaultResources && this.defaultResources[`${this.collectionName?.toUpperCase()}_UPDATE`]) {
 			console.log("Entrou no IF do beforeUpdate")
 			segurancaApi.validarAcessoRecursos(_context.user, [`${this.collectionName?.toUpperCase()}_UPDATE`]);

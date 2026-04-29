@@ -47,6 +47,7 @@ const ToDosDetailController = () => {
         "insert": toDosApi.insertTask,
         "update": toDosApi.editTask
     }
+    
     const submit = (doc: ISubmitProps) => {
         const method = state === "create" ? "insert" : "update";
         taskActions[method](id, doc, (e?: IMeteorError) => {

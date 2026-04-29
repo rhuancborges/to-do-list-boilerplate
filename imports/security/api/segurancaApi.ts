@@ -32,8 +32,10 @@ class SegurancaApi {
 		user: IUserProfile | (Meteor.User & { roles?: string[] | undefined }) | undefined,
 		...recursosTestados: string[]
 	): boolean {
+		console.info(`TESTANDO podeAcessarRecurso ${user?.username}`)
 		if (!!user && getSystemUserProfile() === user) return true;
 		const recursos = this._getRecursosUsuario(user);
+		console.log(recursos)
 		for (const role of recursosTestados) {
 			if (recursos.has(role)) return true;
 		}

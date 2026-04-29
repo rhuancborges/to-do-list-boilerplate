@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Chip, Container, Dialog, FormControl } from "@mui/material";
+import { Button, Chip, Container, Dialog, FormControl, Typography } from "@mui/material";
 import SysForm from "/imports/ui/components/sysForm/sysForm";
 import { toDosSchema } from "../../api/toDosSch";
 import { ToDoModuleContext } from "../../toDosContainer";
@@ -9,7 +9,7 @@ import { ToDosDetailControllerContext } from "./toDosDetailController";
 import SysSwitch from "/imports/ui/components/sysFormFields/sysSwitch/sysSwitch";
 import SysIcon from "/imports/ui/components/sysIcon/sysIcon";
 import SysFormButton from "/imports/ui/components/sysFormFields/sysFormButton/sysFormButton";
-
+import {Meteor} from "meteor/meteor"
 
 
 const ToDosDetailView = () => {
@@ -26,6 +26,7 @@ const ToDosDetailView = () => {
                     {isView ? <SysIcon sx={{"&:hover": {cursor: "pointer"}}} 
                     onClick={controller.onEdit} name="edit"/> : <SysIcon sx={{"&:hover": {cursor: "pointer"}}} 
                     onClick={controller.onClose} name="close"/>}
+                    <Typography>{(Meteor.user())?.username}</Typography>
                 </Header>
                 <SysForm
                 mode={state as "view" | "create" | "edit"} 

@@ -41,7 +41,7 @@ class ToDosApi extends ProductBase<IToDos> {
         if(task.ownerId !== user?._id){
             throw new Meteor.Error("edit-error", "Somente o usuário criador pode editar a tarefa");
         }
-        console.log(doc)
+        
         this.callMethod("update", task, {$set: {...doc}}, (error: IMeteorError) => {
             if(error){
                 callback(error)
