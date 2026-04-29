@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import {Meteor} from "meteor/meteor"
 import HomeStyles from "./homeStyles";
 import { Button, List, ListItem, Typography, Box } from "@mui/material";
 import { HomeControllerContext } from "./homeController";
@@ -7,11 +6,12 @@ import { ComplexTable } from "/imports/ui/components/ComplexTable/ComplexTable";
 import { IToDos, toDosSchema } from "../../api/toDosSch";
 import { useNavigate } from "react-router-dom";
 import { TaskWidget } from "../../components/taskWidget";
+import { getUser } from "/imports/libs/getUser";
 
 const HomeView = () => {
     const controller = useContext(HomeControllerContext)
     const tasks = controller.lastTasks;
-    const user = Meteor.user();
+    const user = getUser()
     const navigate = useNavigate();
     const {Container, Header} = HomeStyles;
 
@@ -25,7 +25,7 @@ const HomeView = () => {
     return (
         <Container> 
             <Header>
-                <Typography variant="h1">{`Olá, ${user?.username}!`}</Typography>
+                <Typography variant="h1">{`Olá, ${user.username}!`}</Typography>
                 <Typography>Seus projetos muito mais organizados. Veja as tarefas
                     adicionadas pelo seu time por você e para você!
                 </Typography>

@@ -2,6 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { IToDos, TASK_STATUS, toDosSchema } from "./toDosSch";
 import { ProductBase } from "/imports/api/productBase";
 import { IMeteorError } from "/imports/typings/IMeteorError";
+import { getUser } from "/imports/libs/getUser";
 
 export interface ISubmitProps {
     title: string, 
@@ -36,9 +37,9 @@ class ToDosApi extends ProductBase<IToDos> {
     }
 
     editTask(_id: string, doc: ISubmitProps, callback: (e: IMeteorError) => void){
-        const user =  Meteor.user();
+        const user = getUser()
         const task = (this.getCollectionInstance()).findOne(_id)
-        if(task.ownerId !== user?._id){
+        if(task.ownerId !== user._id){
             throw new Meteor.Error("edit-error", "Somente o usuário criador pode editar a tarefa");
         }
         
@@ -49,8 +50,8 @@ class ToDosApi extends ProductBase<IToDos> {
         });
     }
 
-    toggleStatus(_id: string, status: TASK_STATUS){
-        this.callMethod("update", _id, {$set: {status: status}});        
+    toggleStatus(task: IToDos, status: TASK_STATUS){
+        this.callMethod("update", task, {$set: {status: status}});        
     }
 
     removeTask(_id: string){

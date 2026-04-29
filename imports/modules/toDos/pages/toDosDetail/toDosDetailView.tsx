@@ -22,11 +22,12 @@ const ToDosDetailView = () => {
     return (
         <Container>
                 <Header>
+                    {isView && <SysIcon sx={{"&:hover": {cursor: "pointer"}}} 
+                    onClick={controller.onClose} name="close"/>}
                     {isCreate ? "Adicionar Item" : isEdit ? "Editar Item" : controller.task.title}
                     {isView ? <SysIcon sx={{"&:hover": {cursor: "pointer"}}} 
                     onClick={controller.onEdit} name="edit"/> : <SysIcon sx={{"&:hover": {cursor: "pointer"}}} 
                     onClick={controller.onClose} name="close"/>}
-                    <Typography>{(Meteor.user())?.username}</Typography>
                 </Header>
                 <SysForm
                 mode={state as "view" | "create" | "edit"} 
