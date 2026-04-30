@@ -1,12 +1,14 @@
 import { ElementType } from 'react';
 import { styled } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
+import { sysSizing } from '../../../../ui/materialui/styles';
 import {SysSectionPaddingXY} from "/imports/ui/layoutComponents/sysLayoutComponents";
 
 interface IToDosListStyles {
     Container: ElementType<BoxProps>;
     Header: ElementType<BoxProps>;
     RowButtons: ElementType<BoxProps>;
+    SearchContainer: ElementType<BoxProps>;
 }
 
 
@@ -41,7 +43,19 @@ const ToDosListStyles: IToDosListStyles = {
         [theme.breakpoints.down('sm')]: {
             columnGap: '1rem'
         }
-    }))
+    })),
+    SearchContainer: styled(Box)(({ theme }) => ({
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            maxWidth: '616px',
+            gap: sysSizing.spacingFixedMd,
+            [theme.breakpoints.down('sm')]: {
+                flexDirection: 'column'
+            }
+        }))
 };
 
 export default ToDosListStyles;

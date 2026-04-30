@@ -7,26 +7,49 @@ import { useTracker } from "meteor/react-meteor-data";
 import { SysLoading } from "/imports/ui/components/sysLoading/sysLoading";
 import { TestContext } from "node:test";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import { filter } from "lodash";
+import { TaskWidget } from "../../components/taskWidget";
 
 interface IToDosListControllerContext {
-    tasks: IToDos[],
+    filtraTasks: (stauts: TASK_STATUS) => (React.JSX.Element | undefined)[] | null,
     handleCreate: ()=>void
     navigate: NavigateFunction,
     toggle: (task: IToDos, status: TASK_STATUS) => void
+    onSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    limparFiltro: () => void;
+    buttonDisabled: boolean,
 }
 
 export const ToDosListControllerContext = React.createContext<IToDosListControllerContext>({} as IToDosListControllerContext)
 
+interface IInitialConfig {
+    sortProperties: {field: string, sortAscending: boolean}
+    filter: Object
+}
+
+const initialConfig = {
+    sortProperties: {field: "createdat", sortAscending: true},
+    filter: {}
+}
+
 const ToDosListController = () => {
     const { id, state } = useContext(ToDoModuleContext);
     const navigate = useNavigate()
+    const [config, setConfig] = useState<IInitialConfig>(initialConfig);
+    const [buttonDisabled, setButtonDisabled] = useState(true);
+
+    const {sortProperties, filter} = config
+    const sort = {
+        [sortProperties.field]: sortProperties.sortAscending ? 1 : -1
+    }
+
     const {isLoading, tasks} = useTracker(() => {
-            const handle = toDosApi.subscribe("toDosList");
-            const tasks = toDosApi.find({}).fetch();
+            const handle = toDosApi.subscribe("toDosList", filter, {sort});
+            const tasks = toDosApi.find(filter, {sort}).fetch();
             return {
                 tasks: tasks as IToDos[], isLoading: !handle?.ready()
             }
-        }, [id]);
+        }, [config]);
 
     if (isLoading) return <SysLoading/>
     
@@ -38,8 +61,38 @@ const ToDosListController = () => {
         toDosApi.toggleStatus(task, status)
     }
 
+    const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const search = setTimeout(() => {
+            setConfig((prev) => ({
+                ...prev,
+                filter: {
+                    ...prev.filter,
+                    title: {$regex: event.target.value.trim(), $options: 'i'}
+                }
+            }))
+            setButtonDisabled(false);
+        }, 1000)
+        return () => clearTimeout(search)
+    }
+
+    const limparFiltro = () => {
+        setConfig(initialConfig);
+        setButtonDisabled(true)
+    }
+
+    const filtraTasks = (status: TASK_STATUS) => {
+        const vetor = tasks.map((task) => {
+            if (task.status == status) return <TaskWidget key={task._id} task={task}/>
+        })
+
+        if (vetor.length == 0) return null 
+        return vetor;
+    }
+    
+
     return (
-        <ToDosListControllerContext.Provider value={{tasks, handleCreate, navigate, toggle}}>
+        <ToDosListControllerContext.Provider value={{filtraTasks, handleCreate, navigate, 
+        toggle, onSearch, limparFiltro, buttonDisabled}}>
             <ToDosListView/>
         </ToDosListControllerContext.Provider>
     );
