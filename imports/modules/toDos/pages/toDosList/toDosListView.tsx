@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
-import { Button, Box, List, Accordion, AccordionSummary, AccordionDetails, ListItem, Typography} from "@mui/material";
+import { Button, Box, List, Accordion, 
+    AccordionSummary, AccordionDetails, ListItem, 
+    Typography, Menu, MenuItem} from "@mui/material";
 import { ComplexTable } from "/imports/ui/components/ComplexTable/ComplexTable";
 import { exampleSch } from "/imports/modules/example/api/exampleSch";
 import { ToDosListControllerContext } from "./toDosListController";
@@ -11,10 +13,12 @@ import SysTextField from "/imports/ui/components/sysFormFields/sysTextField/sysT
 import { SysButton } from "/imports/ui/components/SimpleFormFields/SysButton/SysButton";
 import { TASK_STATUS } from "../../api/toDosSch";
 import ExpandMore from '@mui/icons-material/ExpandMore';
-
+import AppLayoutContext, { IAppLayoutContext } from "/imports/app/appLayoutProvider/appLayoutContext";
+import DeleteDialog from "/imports/ui/appComponents/showDialog/custom/deleteDialog/deleteDialog";
 
 const ToDosListView = () => {
     const controller = useContext(ToDosListControllerContext);
+    
 
     const {Container, SearchContainer} = ToDosListStyles
    
@@ -36,7 +40,9 @@ const ToDosListView = () => {
                     <AccordionSummary expandIcon={<ExpandMore/>}>Não concluídas</AccordionSummary>
                     <AccordionDetails>
                         <List sx={{width: "100%", marginBottom: "1%"}}>
-                           {controller.filtraTasks(TASK_STATUS.NÃO_CONCLUIDA) ?? <ListItem><Typography>Não há tarefas aqui</Typography></ListItem>}
+                          {controller.tasks.map((task) => {
+                                if (task.status == TASK_STATUS.NÃO_CONCLUIDA) return <TaskWidget key={task?._id} task={task}/>
+                            })}
                         </List>
                     </AccordionDetails>
                 </Accordion>
@@ -44,10 +50,17 @@ const ToDosListView = () => {
                     <AccordionSummary expandIcon={<ExpandMore/>}>Concluídas</AccordionSummary>
                     <AccordionDetails>
                         <List sx={{width: "100%", marginBottom: "1%"}}>
-                            {controller.filtraTasks(TASK_STATUS.CONCLUIDA) ?? <ListItem><Typography>Não há tarefas aqui</Typography></ListItem>}
+                            {controller.tasks.map((task) => {
+                                if (task.status == TASK_STATUS.CONCLUIDA) return <TaskWidget key={task?._id} task={task}/>
+                            })}
                         </List>
                     </AccordionDetails>
                 </Accordion>
+                <Menu onClose={controller.handleClose} open={Boolean(controller.anchorMenu)}
+                anchorEl={controller.anchorMenu}>
+                    <MenuItem onClick={controller.handleEdit}>Editar tarefa</MenuItem>
+                    <MenuItem onClick={controller.handleRemove}>Remover Tarefa</MenuItem>
+                </Menu>
                 <Button sx={{marginTop: "10px"}} onClick={controller.handleCreate}>Adicionar tarefa +</Button>
            </Box>
         </Container>

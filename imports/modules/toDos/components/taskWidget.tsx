@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { ListItem, Typography, Box, ListItemAvatar, Stack } from "@mui/material";
+import { ListItem, Typography, Box, ListItemAvatar, Stack, IconButton } from "@mui/material";
 import { IToDos, TASK_STATUS } from "../api/toDosSch";
 import SysIcon from "/imports/ui/components/sysIcon/sysIcon";
 import materialSymbolsIcons, { MaterialSymbolsIconsNames } from "/imports/ui/components/sysIcon/materialSymbolsIcons";
@@ -23,7 +23,8 @@ export const TaskWidget = ({task}: {task: IToDos}) => {
     return(
         <ListItem key={task._id} sx={{"&:hover": {
             backgroundColor: "gray"}, display: "flex", 
-        flexDirection: "row", justifyContent: "flex-start" }} secondaryAction={<SysIcon name="moreVert"/>}>
+        flexDirection: "row", justifyContent: "flex-start" }} 
+        secondaryAction={<IconButton onClick={(e) => controller.selectTask(e, task)} sx={{"&:hover": {cursor: "pointer"}}}><SysIcon name="moreVert"/></IconButton> }>
             {check ? <SysIcon name="checkCircle" sx={{"&:hover": {cursor: "pointer"}}}
             onClick={()=>toggle(false)}/> : <RadioButtonUncheckedIcon sx={{"&:hover": {cursor: "pointer"}}}
             onClick={()=>toggle(true)}/>}
