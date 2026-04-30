@@ -29,7 +29,7 @@ const HomeController = () => {
 
      const {isLoading, lastTasks} = useTracker(() => {
         const handle = toDosApi.subscribe("toDosLasts");
-        const tasks = toDosApi.find({}).fetch();
+        const tasks = toDosApi.find({}, {limit:5, sort: {createdat: -1}}).fetch();
         console.log(tasks);
         return {
             lastTasks: tasks, isLoading: !handle?.ready()

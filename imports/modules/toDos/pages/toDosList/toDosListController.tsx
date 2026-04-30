@@ -15,18 +15,11 @@ import AppLayoutContext, { IAppLayoutContext } from "/imports/app/appLayoutProvi
 
 interface IToDosListControllerContext {
     tasks: IToDos[],
-    handleClose: () => void,
     handleCreate: ()=>void,
-    handleEdit: ()=>void,
-    handleRemove: ()=>void,
     navigate: NavigateFunction,
-    toggle: (task: IToDos, status: TASK_STATUS) => void,
     onSearch: (event: React.ChangeEvent<HTMLInputElement>) => void,
     limparFiltro: () => void,
-    selectTask: (e: React.MouseEvent<HTMLButtonElement>, task: IToDos)=>void,
     buttonDisabled: boolean,
-    anchorMenu: HTMLButtonElement | null,
-
 }
 
 export const ToDosListControllerContext = React.createContext<IToDosListControllerContext>({} as IToDosListControllerContext)
@@ -48,7 +41,7 @@ const ToDosListController = () => {
     const [config, setConfig] = useState<IInitialConfig>(initialConfig);
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [selectedTask, setSelectedTask] = useState<IToDos>();
-    const [anchorMenu, setAnchorMenu] = useState<null | HTMLButtonElement>(null);
+   
 
     const {sortProperties, filter} = config
     const sort = {
@@ -67,11 +60,7 @@ const ToDosListController = () => {
     
     const handleCreate = () => {
         navigate("/tasks/create")
-    }
-
-    const toggle = (task: IToDos, status: TASK_STATUS) => {
-        toDosApi.toggleStatus(task, status)
-    }
+    }    
 
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const search = setTimeout(() => {
@@ -92,36 +81,10 @@ const ToDosListController = () => {
         setButtonDisabled(true)
     }
 
-    const selectTask = (e: React.MouseEvent<HTMLButtonElement>, task: IToDos) => {
-        setSelectedTask(task);
-        setAnchorMenu(e.currentTarget);
-    }
-
-    const handleClose = () => {
-        setSelectedTask(undefined);
-        setAnchorMenu(null)
-    }
-    
-    const handleEdit = () => {
-        navigate(`/tasks/edit/${selectedTask?._id}`)
-    }
-
-    const handleRemove = () => {
-        DeleteDialog({
-            showDialog: sysLayoutContext.showDialog,
-            closeDialog: sysLayoutContext.closeDialog,
-            title: `Excluir dado ${selectedTask.title}`,
-            message: `Tem certeza que deseja excluir o arquivo ${selectedTask.title}?`,
-            onDeleteConfirm: () => {
-                toDosApi.removeTask(selectedTask);
-                sysLayoutContext.showNotification({
-                    message: 'Excluído com sucesso!'
-                })}
-    })};
 
     return (
-        <ToDosListControllerContext.Provider value={{tasks, handleClose, handleCreate, navigate, 
-        toggle, onSearch, limparFiltro, buttonDisabled, selectTask, anchorMenu, handleEdit, handleRemove}}>
+        <ToDosListControllerContext.Provider value={{tasks, handleCreate, navigate, 
+        onSearch, limparFiltro, buttonDisabled}}>
             <ToDosListView/>
         </ToDosListControllerContext.Provider>
     );

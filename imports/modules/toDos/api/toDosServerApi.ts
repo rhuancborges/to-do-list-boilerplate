@@ -39,6 +39,7 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
                     description: 1,
                     ownerName: 1,
                     status: 1,
+                    createdat: 1
                 },
                 limit: 5,
                 sort: {createdat: -1}})

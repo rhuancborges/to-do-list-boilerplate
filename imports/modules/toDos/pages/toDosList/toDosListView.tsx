@@ -15,6 +15,7 @@ import { TASK_STATUS } from "../../api/toDosSch";
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import AppLayoutContext, { IAppLayoutContext } from "/imports/app/appLayoutProvider/appLayoutContext";
 import DeleteDialog from "/imports/ui/appComponents/showDialog/custom/deleteDialog/deleteDialog";
+import { TaskWidgetController } from "../../components/taskWidgetController";
 
 const ToDosListView = () => {
     const controller = useContext(ToDosListControllerContext);
@@ -41,7 +42,7 @@ const ToDosListView = () => {
                     <AccordionDetails>
                         <List sx={{width: "100%", marginBottom: "1%"}}>
                           {controller.tasks.map((task) => {
-                                if (task.status == TASK_STATUS.NÃO_CONCLUIDA) return <TaskWidget key={task?._id} task={task}/>
+                                if (task.status == TASK_STATUS.NÃO_CONCLUIDA) return <TaskWidgetController task={task}/>
                             })}
                         </List>
                     </AccordionDetails>
@@ -51,16 +52,12 @@ const ToDosListView = () => {
                     <AccordionDetails>
                         <List sx={{width: "100%", marginBottom: "1%"}}>
                             {controller.tasks.map((task) => {
-                                if (task.status == TASK_STATUS.CONCLUIDA) return <TaskWidget key={task?._id} task={task}/>
+                                if (task.status == TASK_STATUS.CONCLUIDA) return <TaskWidgetController task={task}/>
                             })}
                         </List>
                     </AccordionDetails>
                 </Accordion>
-                <Menu onClose={controller.handleClose} open={Boolean(controller.anchorMenu)}
-                anchorEl={controller.anchorMenu}>
-                    <MenuItem onClick={controller.handleEdit}>Editar tarefa</MenuItem>
-                    <MenuItem onClick={controller.handleRemove}>Remover Tarefa</MenuItem>
-                </Menu>
+               
                 <Button sx={{marginTop: "10px"}} onClick={controller.handleCreate}>Adicionar tarefa +</Button>
            </Box>
         </Container>

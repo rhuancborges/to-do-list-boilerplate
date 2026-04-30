@@ -7,6 +7,7 @@ import { IToDos, toDosSchema } from "../../api/toDosSch";
 import { useNavigate } from "react-router-dom";
 import { TaskWidget } from "../../components/taskWidget";
 import { getUser } from "/imports/libs/getUser";
+import { TaskWidgetController } from "../../components/taskWidgetController";
 
 const HomeView = () => {
     const controller = useContext(HomeControllerContext)
@@ -19,7 +20,7 @@ const HomeView = () => {
         if (tasks.length == 0){
             return <Typography>Não há tasks</Typography>
         }
-        return tasks.map((task)=><TaskWidget task={task}/>);
+        return tasks.map((task)=><TaskWidgetController task={task}/>);
     }
 
     return (
