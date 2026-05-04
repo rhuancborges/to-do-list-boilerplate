@@ -1094,11 +1094,13 @@ export class ServerApiBase<Doc extends IDoc> {
 					let connection: IConnection;
 					// @ts-ignore
 					connection = this.connection;
+					console.log('Connection on Method:', name, 'connectionId:', connection && connection.id);
 					const meteorContext = await self._createContext(schema, collection, action, connection);
 
 					// Here With pass the new Metoer Method with the framework
 					// security and the meteor _context.
 					const functionResult = func(...param, meteorContext);
+					console.log('Result of Method:', name, 'result:', JSON.stringify(functionResult));
 					if (action === 'insert') {
 						meteorContext.docId = functionResult;
 					}
@@ -1346,7 +1348,6 @@ export class ServerApiBase<Doc extends IDoc> {
 			}
 			return null;
 		} catch (error) {
-			console.log("O ERRO FOI AQUI")
 			this.onUpdateError(_docObj, error);
 			throw error;
 		}
@@ -1365,7 +1366,6 @@ export class ServerApiBase<Doc extends IDoc> {
 	 */
 	async beforeUpdate(_docObj: Doc | Partial<Doc>, _context: IContext) {
 		if (this.defaultResources && this.defaultResources[`${this.collectionName?.toUpperCase()}_UPDATE`]) {
-			console.log("Entrou no IF do beforeUpdate")
 			segurancaApi.validarAcessoRecursos(_context.user, [`${this.collectionName?.toUpperCase()}_UPDATE`]);
 		}
 		return true;

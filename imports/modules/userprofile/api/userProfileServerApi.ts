@@ -22,12 +22,11 @@ interface IUserProfileEstendido extends IUserProfile {
  */
 export const getUserServer = async (connection?: { id: string } | null): IUserProfile => {
 	const user: (User & IMeteorUser) | null = await Meteor.userAsync();
-
+	
 	try {
 		const userProfile = await userprofileServerApi.getCollectionInstance().findOneAsync({
 			email: user.profile.email
 		});
-
 		if (userProfile) {
 			return userProfile;
 		}

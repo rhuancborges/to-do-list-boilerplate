@@ -43,7 +43,7 @@ class ToDosApi extends ProductBase<IToDos> {
             throw new Meteor.Error("edit-error", "Somente o usuário criador pode editar a tarefa");
         }
         
-        this.callMethod("update", task, {$set: {...doc}}, (error: IMeteorError) => {
+        this.callMethod("update", doc, (error: IMeteorError) => {
             if(error){
                 callback(error)
             }
@@ -51,13 +51,15 @@ class ToDosApi extends ProductBase<IToDos> {
     }
 
     toggleStatus(task: IToDos, status: TASK_STATUS){
-        this.callMethod("update", task, {$set: {status: status}});        
+        const doc = {
+            ...task,
+            status: status
+        }
+        this.callMethod("update", doc);        
     }
 
     removeTask(task: IToDos){
         const user = getUser();
-        console.log(task)
-        console.log(user);
         if(task.ownerId !== user?._id){
             throw new Meteor.Error("remove-error", "Somente o usuário criador pode remover uma tarefa");
         }

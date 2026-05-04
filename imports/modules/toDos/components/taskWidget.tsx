@@ -14,7 +14,6 @@ import { TaskWidgetControllerContext } from "./taskWidgetController";
 export const TaskWidget = () => {
     const controller = useContext(TaskWidgetControllerContext);
     const task = controller.task
-    console.log(task)
    
     const user = getUser()
     

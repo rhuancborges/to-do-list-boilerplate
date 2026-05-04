@@ -14,6 +14,7 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
                     title: 1,
                     description: 1,
                     ownerName: 1,
+                    isPrivate: 1,
                     status: 1,
                     ownerId: 1
                 }})
