@@ -52,7 +52,6 @@ const ToDosDetailController = () => {
         const method = state === "create" ? "insert" : "update";
         taskActions[method](id, doc, (e?: IMeteorError) => {
             if(!e){
-                console.log("[SUBMIT] entrou sem erro")
                 handleClose()
                 showNotification({
                     type: "success",
@@ -60,7 +59,6 @@ const ToDosDetailController = () => {
                     message: `A tarefa foi ${method === 'insert' ? 'cadastrada' : 'atualizada'} com sucesso!`
                 })
             } else {
-                console.log("[SUBMIT] entrou com erro")
                 showNotification({
                     type: "error",
                     title: "Operação não realizada!",

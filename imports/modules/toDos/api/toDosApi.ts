@@ -36,18 +36,13 @@ class ToDosApi extends ProductBase<IToDos> {
         callback();
     }
 
-    editTask(_id: string, doc: ISubmitProps, callback: (e: IMeteorError) => void){
-        const user = getUser()
-        const task = (this.getCollectionInstance()).findOne(_id)
-        if(task.ownerId !== user._id){
-            throw new Meteor.Error("edit-error", "Somente o usuário criador pode editar a tarefa");
-        }
-        
-        this.callMethod("update", doc, (error: IMeteorError) => {
+    editTask(_id: string, doc: ISubmitProps, callback: (e?: IMeteorError) => void){        
+        this.callMethod("updateTask", doc, (error: IMeteorError) => {
             if(error){
                 callback(error)
             }
         });
+        callback();
     }
 
     toggleStatus(task: IToDos, status: TASK_STATUS){
@@ -55,16 +50,17 @@ class ToDosApi extends ProductBase<IToDos> {
             ...task,
             status: status
         }
-        this.callMethod("update", doc);        
+        this.callMethod("toggleStatus", doc);        
     }
 
-    removeTask(task: IToDos){
-        const user = getUser();
-        if(task.ownerId !== user?._id){
-            throw new Meteor.Error("remove-error", "Somente o usuário criador pode remover uma tarefa");
-        }
-        this.callMethod("remove", task);
-    }
+    removeTask(task: IToDos, callback: (e?: IMeteorError) => void){
+        this.callMethod("removeTask", task, (error: IMeteorError) => {
+            if(error){
+                callback(error)
+            }
+        });
+        callback();    
+}
 }
 
 export const toDosApi = new ToDosApi();

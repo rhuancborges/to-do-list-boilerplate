@@ -52,10 +52,18 @@ export const TaskWidgetController = ({task}:{task: IToDos}) => {
             title: `Excluir dado ${task.title}`,
             message: `Tem certeza que deseja excluir a tarefa ${task.title}?`,
             onDeleteConfirm: () => {
-                toDosApi.removeTask(task),
-                layoutContext.showNotification({
-                    message: "Tarefa excluída com sucesso",
-                    type: "success"
+                toDosApi.removeTask(task, (error) => {
+                    if(error){
+                        layoutContext.showNotification({
+                            message: error.message,
+                            type: "error"
+                        })
+                    } else {
+                        layoutContext.showNotification({
+                        message: "Tarefa excluída com sucesso",
+                        type: "success"
+                          })
+                    }
                 })
             }
         })

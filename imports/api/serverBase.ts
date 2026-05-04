@@ -1348,6 +1348,7 @@ export class ServerApiBase<Doc extends IDoc> {
 			}
 			return null;
 		} catch (error) {
+			console.log('Error on serverUpdate:', error);
 			this.onUpdateError(_docObj, error);
 			throw error;
 		}
