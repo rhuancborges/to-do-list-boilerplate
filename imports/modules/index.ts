@@ -8,8 +8,7 @@ import { pagesRouterList } from '../sysPages/config/pagesrouters';
 const pages: Array<IRoute | null> = [
 	...UserProfile.pagesRouterList,
 	...ToDos.pagesRouterList,
-	pagesRouterList[0],
-	//...Example.pagesRouterList
+	...pagesRouterList,
 	
 ];
 

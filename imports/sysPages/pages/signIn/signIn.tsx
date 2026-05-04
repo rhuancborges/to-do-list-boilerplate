@@ -19,8 +19,10 @@ const SignInPage: React.FC = () => {
 	const { Container, Content, FormContainer, FormWrapper } = SignInStyles;
 
 	const handleSubmit = ({ email, password }: { email: string; password: string }) => {
+		console.log('submit', { email, password });
 		signIn(email, password, (err) => {
 			if (!err) navigate('/');
+			console.log('err', err);
 			showNotification({
 				type: 'error',
 				title: 'Erro ao tentar logar',
@@ -42,7 +44,7 @@ const SignInPage: React.FC = () => {
 					<Typography variant="inherit" color={(theme) => theme.palette.sysText?.tertiary}>
 						{'{'}
 					</Typography>
-					Boilerplate
+					To-Do List
 					<Typography variant="inherit" color="sysText.tertiary">
 						{'}'}
 					</Typography>
@@ -63,6 +65,12 @@ const SignInPage: React.FC = () => {
 							</SysFormButton>
 						</FormWrapper>
 					</SysForm>
+					<Typography variant="body2">
+						Não tem uma conta?{' '}
+						<Button variant="text" onClick={() => navigate('/signup')} sx={{ p: 0, minWidth: 'auto' }}>
+							<Typography variant="link">Cadastre-se</Typography>
+						</Button>
+					</Typography>
 				</FormContainer>
 
 				<Box component="img" src="/images/wireframe/synergia-logo.svg" sx={{ width: '100%', maxWidth: '400px' }} />

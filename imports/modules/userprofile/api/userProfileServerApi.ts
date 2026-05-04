@@ -181,6 +181,7 @@ class UserProfileServerApi extends ProductServerBase<IUserProfile> {
 	};
 
 	async serverInsert(dataObj: IUserProfileEstendido & { otheraccounts: any }, context: IContext) {
+		
 		let insertId = null;
 		try {
 			const { password } = dataObj;

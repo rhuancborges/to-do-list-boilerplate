@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Email } from 'meteor/email';
 import settings from '/settings';
 
+
 const configureMailServer = () => {
 	// process.env.MAIL_URL = 'smtp://192.168.0.13:25';
 	process.env.MAIL_URL = settings.mail_url_smtp;

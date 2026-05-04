@@ -17,7 +17,7 @@ const SignInStyles: ISignInStyles = {
 		width: '100%',
 		backgroundColor: theme.palette.primary.main,
 		color: theme.palette.primary.contrastText,
-		position: 'relative',
+		//position: 'relative',
 
 		[theme.breakpoints.up('md')]: {
 			backgroundImage: 'url(/images/wireframe/background-synergia.svg)',

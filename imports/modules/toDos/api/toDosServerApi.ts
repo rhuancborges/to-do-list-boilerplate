@@ -1,3 +1,4 @@
+import { getUserServer } from "../../userprofile/api/userProfileServerApi";
 import { Recurso } from "../config/recursos";
 import { IToDos, toDosSchema } from "./toDosSch";
 import { ProductServerBase } from "/imports/api/productServerBase";
@@ -8,7 +9,11 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
             resources: Recurso
         });
 
-        this.addPublication("toDosList", (filter = {}) => {
+        this.addPublication("toDosList", async () => {
+            const user = await getUserServer();
+            const filter = {$or: [
+                            { isPrivate: false },
+                            { isPrivate: true, ownerId: user._id}]}
             return this.defaultListCollectionPublication(filter, {
                 projection: {
                     title: 1,
@@ -33,14 +38,20 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
             })
         })
 
-        this.addPublication("toDosLasts", (filter = {})=>{
+        this.addPublication("toDosLasts", async ()=>{
+            const user = await getUserServer();
+            const filter = {$or: [
+                            { isPrivate: false },
+                            { isPrivate: true, ownerId: user._id}]};
             return this.defaultListCollectionPublication(filter, {
                 projection: {
                     title: 1,
                     description: 1,
                     ownerName: 1,
                     status: 1,
-                    createdat: 1
+                    createdat: 1,
+                    ownerId: 1,
+                    isPrivate: 1
                 },
                 limit: 5,
                 sort: {createdat: -1}})

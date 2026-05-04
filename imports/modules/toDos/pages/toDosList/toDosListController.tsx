@@ -12,6 +12,7 @@ import { TaskWidget } from "../../components/taskWidget";
 import DeleteDialog from "/imports/ui/appComponents/showDialog/custom/deleteDialog/deleteDialog";
 import { ShowDialog } from "/imports/ui/appComponents/showDialog/showDialog";
 import AppLayoutContext, { IAppLayoutContext } from "/imports/app/appLayoutProvider/appLayoutContext";
+import { getUser } from "/imports/libs/getUser";
 
 interface IToDosListControllerContext {
     tasks: IToDos[],
@@ -31,7 +32,9 @@ interface IInitialConfig {
 
 const initialConfig = {
     sortProperties: {field: "createdat", sortAscending: true},
-    filter: {}
+    filter: {$or: [
+                { isPrivate: false },
+                { isPrivate: true, ownerId: getUser()._id}]}
 }
 
 const ToDosListController = () => {
@@ -49,8 +52,8 @@ const ToDosListController = () => {
     }
 
     const {isLoading, tasks} = useTracker(() => {
-            const handle = toDosApi.subscribe("toDosList", filter, {sort});
-            const tasks = toDosApi.find(filter, {sort}).fetch();
+            const handle = toDosApi.subscribe("toDosList");
+            const tasks = toDosApi.find({}, {sort}).fetch();
             return {
                 tasks: tasks as IToDos[], isLoading: !handle?.ready()
             }

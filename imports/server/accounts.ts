@@ -122,7 +122,7 @@ Meteor.startup(() => {
 	Accounts.emailTemplates.siteName = settings.name;
 
 	// region VERIFICAR_EMAIL
-	Accounts.emailTemplates.verifyEmail.subject = () => {
+	/*Accounts.emailTemplates.verifyEmail.subject = () => {
 		return settings.name;
 	};
 	Accounts.emailTemplates.verifyEmail.html = (user, url) => {
@@ -182,12 +182,12 @@ Meteor.startup(() => {
 			'<p><br/>Equipe <b>MeteorReactBase-MUI</b></p>';
 		const footer = `Essa mensagem foi gerada automaticamente!`;
 		return getHTMLEmailTemplate('Alteração da senha atual', email, footer);
-	};
+	};*/
 
 	Accounts.onLogin(async (params: { user: Meteor.User; connection: { onClose: (arg0: () => void) => void } }) => {
 		//@ts-ignore
 		const userProfile = params.user
-			? userprofileServerApi.find({ email: params.user?.profile?.email }).fetch()[0]
+			? userprofileServerApi.find({ email: params.user?.emails}).fetch()[0]
 			: undefined;
 
 		if (userProfile)
@@ -217,7 +217,7 @@ Meteor.startup(() => {
 	});
 
 	Accounts.config({
-		sendVerificationEmail: true,
+		sendVerificationEmail: false,
 		forbidClientAccountCreation: false // impede que um usuário seja criado pelo cliente
 	});
 
@@ -239,7 +239,9 @@ Meteor.startup(() => {
 			};
 			return validateLoginGoogle(user);
 		}
-		if (!user || !user.emails || !user.emails[0].verified) {
+	
+		// Terceira condição do IF caso haja verificação !user.emails[0].verified
+		if (!user || !user.emails) {
 			throw new Meteor.Error('Email ñao verificado', `Este email ainda não foi verificado!`);
 		}
 		return true;

@@ -6,26 +6,17 @@ import { IToDos } from "../../api/toDosSch";
 import { todo } from "node:test";
 import { SysLoading } from "/imports/ui/components/sysLoading/sysLoading";
 import { useTracker } from "meteor/react-meteor-data";
+import { getUser } from "/imports/libs/getUser";
 
 export interface IHomeControllerContext {
-    tasks: Array<IToDos>
     lastTasks: Array<IToDos>
     criar: () => void;
 }
 
 export const HomeControllerContext = React.createContext<IHomeControllerContext>({} as IHomeControllerContext);
 
-const user = Meteor.user();
 
 const HomeController = () => {
-    const {loading, tasks} = useTracker(() => {
-        const handle = toDosApi.subscribe("toDosList");
-        const tasks = toDosApi.find({}).fetch();
-        console.log(tasks);
-        return {
-            tasks, loading: !handle?.ready()
-        }
-    }, []);
 
      const {isLoading, lastTasks} = useTracker(() => {
         const handle = toDosApi.subscribe("toDosLasts");
@@ -43,11 +34,10 @@ const HomeController = () => {
             isPrivate: false
         });
     }
-    if (loading) return <SysLoading/>
     if (isLoading) return <SysLoading/>
 
     return (
-        <HomeControllerContext.Provider value={{tasks, criar, lastTasks}}>
+        <HomeControllerContext.Provider value={{criar, lastTasks}}>
             <HomeView/>
         </HomeControllerContext.Provider>
     );
