@@ -20,12 +20,12 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
         
        
 
-        this.addPublication("toDosList", async () => {
+        this.addPublication("toDosList", async (filter: {$and: any[]}) => {
             const user = await getUserServer();
-            const filter = {$or: [
+            const query = {$and: [...filter.$and, {$or: [
                             { isPrivate: false },
-                            { isPrivate: true, ownerId: user._id}]}
-            return this.defaultListCollectionPublication(filter, {
+                            { isPrivate: true, ownerId: user._id}]}]}
+            return this.defaultListCollectionPublication(query, {
                 projection: {
                     title: 1,
                     description: 1,

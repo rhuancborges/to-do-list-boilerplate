@@ -14,6 +14,8 @@
 
  */
 
+import { spawn } from "child_process";
+
 export const signUpStyle = {
 	containerSignUp: {
 		width: '100%',
@@ -32,7 +34,8 @@ export const signUpStyle = {
 	containerButtonOptions: {
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'space-around'
+		justifyContent: 'space-around',
+		gap: 16
 	},
 	containerRouterSignIn: {
 		color: '#444'

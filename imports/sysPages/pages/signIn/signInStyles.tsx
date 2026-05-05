@@ -15,34 +15,26 @@ const SignInStyles: ISignInStyles = {
 	Container: styled(Box)(({ theme }) => ({
 		minHeight: '100vh',
 		width: '100%',
-		backgroundColor: theme.palette.primary.main,
+		backgroundColor: theme.palette.primary.dark,
 		color: theme.palette.primary.contrastText,
-		//position: 'relative',
-
-		[theme.breakpoints.up('md')]: {
-			backgroundImage: 'url(/images/wireframe/background-synergia.svg)',
-			backgroundSize: 'cover',
-			backgroundPosition: 'right'
-		}
+		position: 'relative',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		
 	})),
 	Content: styled(Box)(({ theme }) => ({
 		width: '100%',
 		height: '100%',
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'space-evenly',
+		justifyContent: 'center',
 		alignItems: 'center',
-		gap: theme.spacing(6),
+		//backgroundColor: "black",
+		gap: theme.spacing(2),
 		padding: `${sysSizing.spacingFixedLg} ${sysSizing.spacingFixedXl}`,
 
-		[theme.breakpoints.up('md')]: {
-			width: 'auto',
-			height: 'auto',
-			position: 'absolute',
-			top: '50%',
-			left: '10%',
-			transform: 'translateY(-50%)'
-		}
 	})),
 	FormContainer: styled(Paper)(({ theme }) => ({
 		width: '100%',
@@ -60,7 +52,7 @@ const SignInStyles: ISignInStyles = {
 		width: '100%',
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'center',
+		justifyContent: 'space-around',
 		alignItems: 'center',
 		gap: theme.spacing(2)
 	}))

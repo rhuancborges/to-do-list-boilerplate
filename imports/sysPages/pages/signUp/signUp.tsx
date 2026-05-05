@@ -4,16 +4,19 @@
 // login page overrides the form’s submit event and call Meteor’s loginWithPassword()
 // Authentication errors modify the component’s state to be displayed
 import React from 'react';
-import { Link, NavigateFunction } from 'react-router-dom';
-import Container from '@mui/material/Container';
+import { Form, Link, NavigateFunction, useNavigate } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
 import TextField from '/imports/ui/components/SimpleFormFields/TextField/TextField';
 import Button from '@mui/material/Button';
 import { userprofileApi } from '../../../modules/userprofile/api/userProfileApi';
 import SimpleForm from '/imports/ui/components/SimpleForm/SimpleForm';
 
 import { signUpStyle } from './signUpStyle';
+import SignInStyles from '../signIn/signInStyles';
 import Box from '@mui/material/Box';
 import { IUserProfile } from '/imports/modules/userprofile/api/userProfileSch';
+import SysForm from '/imports/ui/components/sysForm/sysForm';
+import SysTextField from '/imports/ui/components/sysFormFields/sysTextField/sysTextField';
 
 interface ISignUp {
 	showNotification: (options?: Object) => void;
@@ -23,6 +26,7 @@ interface ISignUp {
 
 export const SignUp = (props: ISignUp) => {
 	const { showNotification } = props;
+	const navigate = useNavigate();
 
 	const handleSubmit = (doc: { email: string; password: string }) => {
 		const { email, password } = doc;
@@ -47,40 +51,57 @@ export const SignUp = (props: ISignUp) => {
 		});
 	};
 
+	const { Container, FormContainer, Content, FormWrapper} = SignInStyles;
+
 	return (
-		<Container style={signUpStyle.containerSignUp}>
-			<Box sx={signUpStyle.labelRegisterSystem}>
-				<img src="/images/wireframe/logo.png" style={signUpStyle.imageLogo} />
-				{'Cadastrar no sistema'}
-			</Box>
-			<SimpleForm
-				schema={{
-					email: {
-						type: String,
-						label: 'Email',
-						optional: false
-					},
-					password: {
-						type: String,
-						label: 'Senha',
-						optional: false
-					}
-				}}
-				onSubmit={handleSubmit}>
-				<TextField id="Email" label="Email" fullWidth name="email" type="email" placeholder="Digite um email" />
-				<TextField id="Senha" label="Senha" fullWidth name="password" placeholder="Digite uma senha" type="password" />
-				<Box sx={signUpStyle.containerButtonOptions}>
-					<Button color={'primary'} variant={'outlined'} id="submit">
-						Cadastrar
-					</Button>
+		<Container>
+			<Content>
+				<Box sx={signUpStyle.labelRegisterSystem}>
+					<Typography variant="h1" display={'inline-flex'} gap={1}>
+						<Typography variant="inherit" color={(theme) => theme.palette.sysText?.tertiary}>
+							{'{'}
+						</Typography>
+						To-Do List
+						<Typography variant="inherit" color="sysText.tertiary">
+							{'}'}
+						</Typography>
+					</Typography>
 				</Box>
-			</SimpleForm>
-			<Box sx={signUpStyle.containerRouterSignIn}>
-				Já tem uma conta? Faça login clicando{' '}
-				<Link to="/signin" color={'secondary'}>
-					aqui
-				</Link>
-			</Box>
+				<FormContainer>
+					<Typography variant="h5">Cadastre-se no sistema</Typography>
+					<SysForm
+						schema={{
+							email: {
+								type: String,
+								label: 'Email',
+								optional: false
+							},
+							password: {
+								type: String,
+								label: 'Senha',
+								optional: false
+							}
+						}}
+						onSubmit={handleSubmit}>
+						<FormWrapper>
+							<SysTextField id="Email" label="Email" fullWidth name="email" type="email" placeholder="Digite um email" />
+							<SysTextField id="Senha" label="Senha" fullWidth name="password" placeholder="Digite uma senha" type="password" />
+							<Box sx={signUpStyle.containerButtonOptions}>
+								<Button color={'primary'} variant={'outlined'} id="submit">
+									Cadastrar
+								</Button>
+							</Box>
+						</FormWrapper>
+					</SysForm>
+					<Typography variant="body2">
+						Já tem uma conta?{' '}
+						<Button variant="text" onClick={() => navigate('/signin')} sx={{ p: 0, minWidth: 'auto' }}>
+							<Typography variant="link">Faça Login</Typography>
+						</Button>
+					</Typography>
+				</FormContainer>
+				<Box component="img" src="/images/wireframe/synergia-logo.svg" sx={{ width: '100%', maxWidth: '400px' }} />
+			</Content>
 		</Container>
 	);
 };

@@ -27,14 +27,12 @@ export const ToDosListControllerContext = React.createContext<IToDosListControll
 
 interface IInitialConfig {
     sortProperties: {field: string, sortAscending: boolean}
-    filter: Object
+    filter: {$and: any[]}
 }
 
 const initialConfig = {
     sortProperties: {field: "createdat", sortAscending: true},
-    filter: {$or: [
-                { isPrivate: false },
-                { isPrivate: true, ownerId: getUser()._id}]}
+    filter: {$and: []}
 }
 
 const ToDosListController = () => {
@@ -52,7 +50,8 @@ const ToDosListController = () => {
     }
 
     const {isLoading, tasks} = useTracker(() => {
-            const handle = toDosApi.subscribe("toDosList");
+            console.log("filter", filter)
+            const handle = toDosApi.subscribe("toDosList", filter);
             const tasks = toDosApi.find({}, {sort}).fetch();
             return {
                 tasks: tasks as IToDos[], isLoading: !handle?.ready()
@@ -70,8 +69,9 @@ const ToDosListController = () => {
             setConfig((prev) => ({
                 ...prev,
                 filter: {
-                    ...prev.filter,
-                    title: {$regex: event.target.value.trim(), $options: 'i'}
+                   $and: [
+                    {title: {$regex: event.target.value.trim(), $options: 'i'}}
+                   ]
                 }
             }))
             setButtonDisabled(false);

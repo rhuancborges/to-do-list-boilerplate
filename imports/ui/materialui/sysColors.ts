@@ -124,14 +124,14 @@ const sysLightPalette: PaletteOptions = {
 
   primary: {
     light: sysPurpleColors[70],
-    main: sysPurpleColors[50]!,
+    main: sysPurpleColors[20]!,
     dark: sysPurpleColors[30],
     contrastText: sysCommonColors.white
   },
 
   secondary: {
     light: sysGreenColors[95],
-    main: sysGreenColors[80]!,
+    main: sysGreenColors[40]!,
     dark: sysGreenColors[60],
     contrastText: sysGreyColors[20]
   },
@@ -145,7 +145,7 @@ const sysLightPalette: PaletteOptions = {
 
   success: {
     light: sysGreenColors[95],
-    main: sysGreenColors[60]!,
+    main: sysGreenColors[40]!,
     dark: sysGreenColors[40],
     contrastText: sysCommonColors.white
   },
@@ -166,7 +166,7 @@ const sysLightPalette: PaletteOptions = {
 
   error: {
     light: sysRedColors[95],
-    main: sysRedColors[60]!,
+    main: sysRedColors[40]!,
     dark: sysRedColors[40],
     contrastText: sysCommonColors.white
   },
@@ -186,7 +186,7 @@ const sysLightPalette: PaletteOptions = {
     baseContrast: sysCommonColors.black,
     primary: sysPurpleColors[50],
     secondary: sysGreenColors[80],
-    tertiary: sysNeonColors[90],
+    tertiary: sysYellowColors[60],
   },
   background: {
     paper: sysCommonColors.white,
@@ -200,8 +200,8 @@ const sysLightPalette: PaletteOptions = {
     bg3: sysGreyColors[90],
   },
   sysAction: {
-    primary: sysPurpleColors[50],
-    primaryHover: sysPurpleColors[30],
+    primary: sysPurpleColors[20],
+    primaryHover: sysPurpleColors[10],
     primaryBgHover: sysPurpleColors.transparent,
     primaryIcon: sysPurpleColors.grey,
     primaryContrastText: sysCommonColors.white,
