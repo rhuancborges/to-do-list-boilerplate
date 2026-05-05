@@ -24,9 +24,11 @@ O projeto consiste em uma aplicação web de lista de tarefas, com as seguintes 
 1. Instale o Meteor na sua máquina:
      - Linux/macOS: 
      <br/>
+     
      ```bash
      curl https://install.meteor.com/ | sh
      ```
+     
      - Windows: baixe o instalador em https://docs.meteor.com/about/install.html
 
 2. Acesse o diretório local em que você armazenará o projeto e clone este repositório ou copie o projeto:
