@@ -50,7 +50,6 @@ const ToDosListController = () => {
     }
 
     const {isLoading, tasks} = useTracker(() => {
-            console.log("filter", filter)
             const handle = toDosApi.subscribe("toDosList", filter);
             const tasks = toDosApi.find({}, {sort}).fetch();
             return {

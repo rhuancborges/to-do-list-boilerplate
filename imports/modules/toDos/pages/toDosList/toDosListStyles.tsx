@@ -50,7 +50,7 @@ const ToDosListStyles: IToDosListStyles = {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            maxWidth: '616px',
+            maxWidth: '636px',
             gap: sysSizing.spacingFixedMd,
             [theme.breakpoints.down('sm')]: {
                 flexDirection: 'column'
